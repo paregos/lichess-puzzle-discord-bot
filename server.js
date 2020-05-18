@@ -1,31 +1,26 @@
-'use strict';
-
-/**
- * A ping pong bot, whenever you send "ping", it replies "pong".
- */
-
-// Import the discord.js module
 const Discord = require('discord.js');
+const BoardGifGenerator = require('./BoardGifGenerator.js');
 
-// Create an instance of a Discord client
 const client = new Discord.Client();
 
-// Get Bot Token
 const token = process.env.DISCORD_LICHESS_TOKEN;
 
-/**
- * The ready event is vital, it means that only _after_ this will your bot start reacting to information
- * received from Discord
- */
+const gifGenerator = new BoardGifGenerator("6175");
+
 client.on('ready', () => {
     console.log('I am ready!');
 });
 
-// Create an event listener for messages
 client.on('message', message => {
-    // If the message is "ping"
-    if (message.content === 'ping') {
-        // Send "pong" to the same channel
+
+    if (message.content === '!help') {
+        message.channel.send("help todo");
+    }
+    else if (message.content === '!p') {
+        console.log("in here");
+        gifGenerator.getGif("3r1bk1/p2B1pp1/1pp5/3b2qp/P1pP3B/2P2P2/5QPP/4R1K1", "a8d8");
+    }
+    else if (message.content === 'ping') {
         message.channel.send('pong');
     }
 });
