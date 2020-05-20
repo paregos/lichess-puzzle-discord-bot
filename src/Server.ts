@@ -1,5 +1,8 @@
 import * as Discord from "discord.js";
 import { maybeGenerateGif } from "./BoardGifGenerator";
+import { setupDatabase, closeDatabase } from "./db/Repository";
+
+setupDatabase();
 
 const client = new Discord.Client();
 const token = process.env.DISCORD_LICHESS_TOKEN;
@@ -24,3 +27,7 @@ client.on("message", async message => {
 });
 
 client.login(token);
+
+process.on("SIGTERM", function() {
+  closeDatabase();
+});
