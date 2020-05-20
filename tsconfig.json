@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "baseUrl": "src",
+        "rootDir": "src",
+        "outDir": "dist"
+    },
+    "include": [
+        "src/**/*.*"
+    ]
+}

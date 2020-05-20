@@ -2,9 +2,9 @@
   "name": "lichess-puzzle-discord-bot",
   "version": "1.0.0",
   "description": "A discord bot for lichess",
-  "main": "server.js",
+  "main": "Server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node src/server.ts"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,14 @@
   },
   "homepage": "https://github.com/paregos/lichess-puzzle-discord-bot#readme",
   "dependencies": {
-    "discord.js": "^12.2.0"
+    "@types/sqlite3": "^3.1.6",
+    "axios": "^0.19.2",
+    "discord.js": "^12.2.0",
+    "sqlite3": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.4",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.3"
   }
 }
