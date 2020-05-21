@@ -12,7 +12,7 @@ type BoardGifStructure = {
 export async function maybeGenerateGif({
   puzzleId,
   fen,
-  lastMove
+  lastMove,
 }: BoardGifStructure) {
   const baseUrl = "http://localhost:" + lilaPort;
   const queryString = "/image.gif?fen=" + fen + "&lastMove=" + lastMove;
@@ -22,12 +22,12 @@ export async function maybeGenerateGif({
   return axios({
     method: "get",
     url: url,
-    responseType: "stream"
+    responseType: "stream",
   })
-    .then(res => {
+    .then((res) => {
       res.data
         .pipe(fs.createWriteStream(fileName))
         .on("close", () => console.log("done"));
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 }

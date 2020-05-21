@@ -1,11 +1,11 @@
 {
-    "compilerOptions": {
-        "strict": true,
-        "baseUrl": "src",
-        "rootDir": "src",
-        "outDir": "dist"
-    },
-    "include": [
-        "src/**/*.*"
-    ]
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": "src",
+    "rootDir": "src",
+    "outDir": "dist",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "include": ["src/**/*.*"]
 }
