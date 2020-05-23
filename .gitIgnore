@@ -1,10 +1,9 @@
 node_modules/
 sqlite.db
-board_gifs/*
 dist/
 
 # exclude all gifs
-board_gifs/*
+./src/board_gifs/*
 
 # but keep the parent folder
 !board_gifs/.gitkeep 

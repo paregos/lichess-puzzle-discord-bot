@@ -42,7 +42,6 @@ async function tryGet(sql: string, params: any[]) {
 function tryRun(sql: string, params: any[]) {
   try {
     const row = run(sql, params);
-    console.log("row " + row);
     return row;
   } catch (e) {
     console.error("ERROR: ", e);
@@ -107,6 +106,7 @@ export async function findChannelPuzzleProgress(
 type Puzzle = {
   _id: number;
   lichess_puzzle_id: number;
+  ingested: boolean;
 };
 
 export async function findPuzzle(lichess_puzzle_id: number): Promise<Puzzle> {
@@ -114,5 +114,38 @@ export async function findPuzzle(lichess_puzzle_id: number): Promise<Puzzle> {
   const params = [lichess_puzzle_id];
 
   const row = await tryGet(sql, params);
+  return row;
+}
+
+export async function createPuzzle(lichess_puzzle_id: number) {
+  const sql = "INSERT INTO puzzle(lichess_puzzle_id) VALUES (?)";
+  const params = [lichess_puzzle_id, false];
+
+  const row = await tryRun(sql, params);
+  return row;
+}
+
+//PuzzleStep
+
+export type PuzzleStep = {
+  puzzle: number;
+  step: number;
+  fen: string;
+  previous_move: string;
+  correct_next_move: string;
+};
+
+export async function createPuzzleStep({
+  puzzle,
+  step,
+  fen,
+  previous_move,
+  correct_next_move,
+}: PuzzleStep) {
+  const sql =
+    "INSERT INTO puzzle_step(puzzle, step, fen, previous_move, correct_next_move) VALUES (?, ?, ?, ?, ?)";
+  const params = [puzzle, step, fen, previous_move, correct_next_move];
+
+  const row = await tryRun(sql, params);
   return row;
 }

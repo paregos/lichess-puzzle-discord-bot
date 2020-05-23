@@ -18,6 +18,7 @@ export function setupDbSchema(db: sqlite3.Database) {
       `puzzle (
       _id INTEGER PRIMARY KEY AUTOINCREMENT,
       lichess_puzzle_id INTEGER,
+      ingested Boolean,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
       `
   );

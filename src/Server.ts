@@ -25,7 +25,8 @@ client.on("message", async (message) => {
     message.channel.send("help todo");
   } else if (message.content === "!p") {
     await maybeGenerateGif({
-      puzzleId: "1",
+      lichessPuzzleId: 1,
+      puzzleStep: 1,
       fen: "3r1bk1/p2B1pp1/1pp5/3b2qp/P1pP3B/2P2P2/5QPP/4R1K1",
       lastMove: "a8d8",
     });
