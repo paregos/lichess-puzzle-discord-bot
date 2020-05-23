@@ -1,4 +1,5 @@
 import * as Discord from "discord.js";
+import type { Channel } from "./db/Repository";
 
 import { findChannel, createChannel } from "./db/Repository";
 
@@ -12,11 +13,13 @@ export async function maybeCreateChannel(discordChannel: Discord.Channel) {
   }
 
   console.log("Channel " + discordChannelId + " not found.... creating");
-  channelRow = await createChannel({
+  await createChannel({
     discord_channel_id: discordChannelId,
     type: discordChannel.type.toString(),
     puzzle_progress: null,
   });
+}
 
-  console.log(channelRow.type);
+export async function getChannel(discordChannelId: string): Promise<Channel> {
+  return await findChannel(discordChannelId);
 }

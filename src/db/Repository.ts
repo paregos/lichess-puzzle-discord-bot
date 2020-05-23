@@ -13,7 +13,7 @@ const db = new sqlite3.Database("./sqlite.db", (err) => {
 });
 
 const get = util.promisify<string, any, any>(db.get.bind(db));
-const run = util.promisify<string, any, void>(db.run.bind(db));
+const run = util.promisify<string, any, any>(db.run.bind(db));
 const all = util.promisify<string, any, any[]>(db.all).bind(db);
 
 export function setupDatabase() {
@@ -33,32 +33,38 @@ export function closeDatabase() {
 async function tryGet(sql: string, params: any[]) {
   try {
     const row = get(sql, params);
-    return row;
+    return await row;
   } catch (e) {
     console.error("ERROR: ", e);
   }
 }
 
-async function tryRun(sql: string, params: any[]) {
+function tryRun(sql: string, params: any[]) {
   try {
     const row = run(sql, params);
+    console.log("row " + row);
     return row;
   } catch (e) {
     console.error("ERROR: ", e);
   }
 }
 
-type Channel = {
+// Channel
+
+export type Channel = {
   discord_channel_id: string;
   type: string;
   puzzle_progress: number | null;
 };
 
-export async function findChannel(discord_channel_id: string) {
+export async function findChannel(
+  discord_channel_id: string
+): Promise<Channel> {
   const sql = "SELECT * FROM channel where discord_channel_id = ?";
   const params = [discord_channel_id];
 
-  return await tryGet(sql, params);
+  const row = await tryGet(sql, params);
+  return row;
 }
 
 export async function createChannel({
@@ -74,5 +80,39 @@ export async function createChannel({
 
   var params = [discord_channel_id, type, puzzle_progress];
   console.log("Creating channel");
-  return await tryRun(sql, params);
+  return tryRun(sql, params);
+}
+
+// Puzzle Progress
+
+type PuzzleProgress = {
+  _id: number;
+  discord_channel_id: string;
+  type: string;
+  puzzle_progress: number | null;
+};
+
+export async function findChannelPuzzleProgress(
+  puzzle_progress: number
+): Promise<PuzzleProgress> {
+  const sql = "SELECT * FROM puzzle_progress where _id = ?";
+  const params = [puzzle_progress];
+
+  const row = await tryGet(sql, params);
+  return row;
+}
+
+// Puzzle
+
+type Puzzle = {
+  _id: number;
+  lichess_puzzle_id: number;
+};
+
+export async function findPuzzle(lichess_puzzle_id: number): Promise<Puzzle> {
+  const sql = "SELECT * FROM puzzle where _id = ?";
+  const params = [lichess_puzzle_id];
+
+  const row = await tryGet(sql, params);
+  return row;
 }

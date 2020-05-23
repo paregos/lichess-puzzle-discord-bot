@@ -1,7 +1,7 @@
-import "reflect-metadata";
 import * as Discord from "discord.js";
 import { maybeGenerateGif } from "./BoardGifService";
 import { maybeCreateChannel } from "./ChannelService";
+import { replyWithPuzzle } from "./PuzzleService";
 import { setupDatabase, closeDatabase } from "./db/Repository";
 
 setupDatabase();
@@ -31,9 +31,7 @@ client.on("message", async (message) => {
     });
     message.channel.send("Daily Puzzle", { files: ["./src/board_gifs/1.gif"] });
   } else if (message.content === "!puzzle") {
-    console.log(message.channel);
-
-    message.channel.send("aaa");
+    replyWithPuzzle(message);
   }
 });
 

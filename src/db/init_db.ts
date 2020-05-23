@@ -27,9 +27,10 @@ export function setupDbSchema(db: sqlite3.Database) {
       `puzzle_progress (
       _id INTEGER PRIMARY KEY AUTOINCREMENT,
       puzzle INTEGER,
-      current_step INTEGER,
+      current_puzzle_step INTEGER,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY(puzzle) REFERENCES puzzle(_id))
+      FOREIGN KEY(puzzle) REFERENCES puzzle(_id),
+      FOREIGN KEY(current_puzzle_step) REFERENCES puzzle_step(_id))
       `
   );
 
