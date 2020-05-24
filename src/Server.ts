@@ -21,17 +21,29 @@ client.on("message", async (message) => {
   // Make sure the channel exists
   await maybeCreateChannel(message.channel);
 
-  if (message.content === "!help") {
-    message.channel.send("help todo");
-  } else if (message.content === "!p") {
-    await maybeGenerateGif({
-      lichessPuzzleId: 1,
-      puzzleStep: 1,
-      fen: "3r1bk1/p2B1pp1/1pp5/3b2qp/P1pP3B/2P2P2/5QPP/4R1K1",
-      lastMove: "a8d8",
-    });
-    message.channel.send("Daily Puzzle", { files: ["./src/board_gifs/1.gif"] });
-  } else if (message.content === "!puzzle") {
+  if (message.content === "!help" || message.content === "help") {
+    const messageEmbed = new Discord.MessageEmbed()
+      .setTitle("Bot Commands")
+      .setThumbnail("https://i.imgur.com/wSTFkRM.png")
+      .addFields(
+        {
+          name: "!help | help",
+          value: "Displays the list of commands you are seeing here",
+        },
+        {
+          name: "!puzzle | puzzle",
+          value:
+            "Gets a new puzzle for the current channel. If the channel is already working on a puzzle this command returns the current step of the puzzle the channel is on.",
+        },
+        {
+          name: "!move [x] | move [x], e.g !move a4a5",
+          value:
+            "Submits a move against the current puzzle step of the channel. Moves are in the format of a4e5 etc",
+        }
+      )
+      .setFooter("Some footer text here", "https://i.imgur.com/wSTFkRM.png");
+    message.channel.send(messageEmbed);
+  } else if (message.content === "!puzzle" || message.content === "puzzle") {
     replyWithPuzzle(message);
   }
 });

@@ -11,5 +11,5 @@
 
 ## How to run
 
-`npm install`
-`nodemon`
+- `npm install`
+- `nodemon`

@@ -1,7 +1,7 @@
 import * as Discord from "discord.js";
-import type { Channel } from "./db/Repository";
+import type { ChannelRecord } from "./db/Repository";
 
-import { findChannel, createChannel } from "./db/Repository";
+import { findChannel, createChannel, updateChannel } from "./db/Repository";
 
 export async function maybeCreateChannel(discordChannel: Discord.Channel) {
   var discordChannelId = discordChannel.id.toString();
@@ -13,13 +13,23 @@ export async function maybeCreateChannel(discordChannel: Discord.Channel) {
   }
 
   console.log("Channel " + discordChannelId + " not found.... creating");
-  await createChannel({
-    discord_channel_id: discordChannelId,
-    type: discordChannel.type.toString(),
-    puzzle_progress: null,
-  });
+  return await createChannel(
+    discordChannelId,
+    discordChannel.type.toString(),
+    null
+  );
 }
 
-export async function getChannel(discordChannelId: string): Promise<Channel> {
+export async function getChannel(
+  discordChannelId: string
+): Promise<ChannelRecord> {
   return await findChannel(discordChannelId);
+}
+
+export async function setChannelCurrentPuzzleStep(
+  channel: number,
+  puzzleStep: number
+) {
+  console.log("Updating Channel puzzle step");
+  return await updateChannel(channel, puzzleStep);
 }

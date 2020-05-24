@@ -16,7 +16,7 @@ const get = util.promisify<string, any, any>(db.get.bind(db));
 const run = util.promisify<string, any, any>(db.run.bind(db));
 const all = util.promisify<string, any, any[]>(db.all).bind(db);
 
-export function setupDatabase() {
+export async function setupDatabase() {
   setupDbSchema(db);
 }
 
@@ -50,15 +50,16 @@ function tryRun(sql: string, params: any[]) {
 
 // Channel
 
-export type Channel = {
+export type ChannelRecord = {
+  _id: number;
   discord_channel_id: string;
   type: string;
-  puzzle_progress: number | null;
+  current_puzzle_step: number | null;
 };
 
 export async function findChannel(
   discord_channel_id: string
-): Promise<Channel> {
+): Promise<ChannelRecord> {
   const sql = "SELECT * FROM channel where discord_channel_id = ?";
   const params = [discord_channel_id];
 
@@ -66,60 +67,57 @@ export async function findChannel(
   return row;
 }
 
-export async function createChannel({
-  discord_channel_id,
-  type,
-  puzzle_progress,
-}: Channel) {
+export async function createChannel(
+  discord_channel_id: string,
+  type: string,
+  current_puzzle_step: number | null
+) {
   const sql = `INSERT INTO channel(
     discord_channel_id,
     type,
-    puzzle_progress
+    current_puzzle_step
     ) VALUES (?, ?, ?)`;
 
-  var params = [discord_channel_id, type, puzzle_progress];
-  console.log("Creating channel");
+  var params = [discord_channel_id, type, current_puzzle_step];
   return tryRun(sql, params);
 }
 
-// Puzzle Progress
+export async function updateChannel(
+  channel: number,
+  current_puzzle_step: number
+) {
+  const sql = `UPDATE channel set current_puzzle_step = ? where _id = ?`;
 
-type PuzzleProgress = {
-  _id: number;
-  discord_channel_id: string;
-  type: string;
-  puzzle_progress: number | null;
-};
-
-export async function findChannelPuzzleProgress(
-  puzzle_progress: number
-): Promise<PuzzleProgress> {
-  const sql = "SELECT * FROM puzzle_progress where _id = ?";
-  const params = [puzzle_progress];
-
-  const row = await tryGet(sql, params);
-  return row;
+  var params = [current_puzzle_step, channel];
+  return tryRun(sql, params);
 }
 
 // Puzzle
 
-type Puzzle = {
+type PuzzleRecord = {
   _id: number;
-  lichess_puzzle_id: number;
   ingested: boolean;
 };
 
-export async function findPuzzle(lichess_puzzle_id: number): Promise<Puzzle> {
+export async function findPuzzle(puzzle: number): Promise<PuzzleRecord> {
   const sql = "SELECT * FROM puzzle where _id = ?";
-  const params = [lichess_puzzle_id];
+  const params = [puzzle];
 
   const row = await tryGet(sql, params);
   return row;
 }
 
-export async function createPuzzle(lichess_puzzle_id: number) {
-  const sql = "INSERT INTO puzzle(lichess_puzzle_id) VALUES (?)";
-  const params = [lichess_puzzle_id, false];
+export async function createPuzzle(puzzle: number) {
+  const sql = "INSERT INTO puzzle(_id, ingested) VALUES (?,?)";
+  const params = [puzzle, false];
+
+  const row = await tryRun(sql, params);
+  return row;
+}
+
+export async function updatePuzzle(puzzle: number, ingested: boolean) {
+  const sql = "UPDATE puzzle SET ingested = ? where _id = ?";
+  const params = [ingested, puzzle];
 
   const row = await tryRun(sql, params);
   return row;
@@ -127,7 +125,8 @@ export async function createPuzzle(lichess_puzzle_id: number) {
 
 //PuzzleStep
 
-export type PuzzleStep = {
+export type PuzzleStepRecord = {
+  _id: number;
   puzzle: number;
   step: number;
   fen: string;
@@ -135,17 +134,42 @@ export type PuzzleStep = {
   correct_next_move: string;
 };
 
-export async function createPuzzleStep({
-  puzzle,
-  step,
-  fen,
-  previous_move,
-  correct_next_move,
-}: PuzzleStep) {
+export async function createPuzzleStep(
+  puzzle: number,
+  step: number,
+  fen: string,
+  previous_move: string,
+  correct_next_move: string
+) {
   const sql =
     "INSERT INTO puzzle_step(puzzle, step, fen, previous_move, correct_next_move) VALUES (?, ?, ?, ?, ?)";
   const params = [puzzle, step, fen, previous_move, correct_next_move];
 
   const row = await tryRun(sql, params);
+  return row;
+}
+
+export async function findPuzzleStep(
+  puzzle: number,
+  step: number
+): Promise<PuzzleStepRecord> {
+  const sql = "SELECT * FROM puzzle_step where puzzle = ? and step = ?";
+  const params = [puzzle, step];
+
+  const row = await tryGet(sql, params);
+  return row;
+}
+
+export async function findPuzzleStepById(
+  puzzle_step: number | null
+): Promise<PuzzleStepRecord> {
+  if (puzzle_step == null) {
+    throw new Error("Puzzle step cannot be null");
+  }
+
+  const sql = "SELECT * FROM puzzle_step where _id = ?";
+  const params = [puzzle_step];
+
+  const row = await tryGet(sql, params);
   return row;
 }
