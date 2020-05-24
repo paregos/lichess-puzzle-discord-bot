@@ -3,7 +3,7 @@ sqlite.db
 dist/
 
 # exclude all gifs
-./src/board_gifs/*
+/src/board_gifs/*
 
 # but keep the parent folder
-!board_gifs/.gitkeep 
+!/src/board_gifs/.gitkeep 
