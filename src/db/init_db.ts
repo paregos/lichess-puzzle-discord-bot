@@ -3,7 +3,7 @@ import * as sqlite3 from "sqlite3";
 export function setupDbSchema(db: sqlite3.Database) {
   console.log("In init DB");
 
-  const shouldDelete = false;
+  const shouldDelete = true;
 
   db.run(
     `CREATE TABLE IF NOT EXISTS

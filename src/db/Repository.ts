@@ -84,7 +84,7 @@ export async function createChannel(
 
 export async function updateChannel(
   channel: number,
-  current_puzzle_step: number
+  current_puzzle_step: number | null
 ) {
   const sql = `UPDATE channel set current_puzzle_step = ? where _id = ?`;
 

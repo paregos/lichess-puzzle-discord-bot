@@ -28,7 +28,7 @@ export async function getChannel(
 
 export async function setChannelCurrentPuzzleStep(
   channel: number,
-  puzzleStep: number
+  puzzleStep: number | null
 ) {
   console.log("Updating Channel puzzle step");
   return await updateChannel(channel, puzzleStep);

@@ -2,42 +2,43 @@ import axios from "axios";
 import * as Discord from "discord.js";
 import { maybeGenerateGif, sendBoardGifToChannel } from "./BoardGifService";
 import { getChannel, setChannelCurrentPuzzleStep } from "./ChannelService";
+import { sendPuzzleCompleteMesssage } from "./MessageService";
 
 import {
+  ChannelRecord,
   findPuzzle,
   createPuzzle,
   updatePuzzle,
   createPuzzleStep,
   findPuzzleStep,
   findPuzzleStepById,
+  PuzzleStepRecord,
+  updateChannel,
 } from "./db/Repository";
 
-export async function replyWithPuzzle(message: Discord.Message) {
+export async function maybeCreateNewPuzzleForChannel(message: Discord.Message) {
   // Get the current puzzle the channel is on
   var channel = await getChannel(message.channel.id.toString());
 
   // Ensure that channel has a puzzle_step assigned to it
   if (channel.current_puzzle_step != null) {
     console.log("Channel is already on puzzle");
+    return;
   } else {
     console.log("Channel has no puzzle");
-    await createPuzzleForChannel(channel._id);
-    channel = await getChannel(message.channel.id.toString());
+    return await createPuzzleForChannel(channel._id);
   }
-
-  // Get the channel puzzle step
-  var puzzleStep = await findPuzzleStepById(channel.current_puzzle_step);
-  console.log(puzzleStep);
-
-  // Send the message
-  return await sendBoardGifToChannel(
-    message.channel,
-    puzzleStep.puzzle,
-    puzzleStep.step
-  );
 }
 
-export async function createPuzzleForChannel(channel: number) {
+export async function getChannelCurrentPuzzleStep(
+  message: Discord.Message
+): Promise<PuzzleStepRecord> {
+  const channel = await getChannel(message.channel.id.toString());
+
+  return await findPuzzleStepById(channel.current_puzzle_step);
+}
+
+async function createPuzzleForChannel(channel: number) {
   // Gets the new puzzle id
   const puzzleId = findNewPuzzleIdForChannel();
   // Check if we need to ingest the puzzle
@@ -67,19 +68,72 @@ export async function assignInitialPuzzleStepToChannel(
   return await assignPuzzleStepToChannel(channel, puzzleStep._id);
 }
 
-//TODO
-export async function assignNextStepOfPuzzleToChannel() {}
+export async function maybeSolvePuzzleStep(
+  message: Discord.Message,
+  move: string
+) {
+  const channel = await getChannel(message.channel.id.toString());
+  const channelCurrentPuzzleStep = await findPuzzleStepById(
+    channel.current_puzzle_step
+  );
+  try {
+    if (channelCurrentPuzzleStep.correct_next_move === move) {
+      await message.channel.send("Correct Move");
+      return await maybeAssignNextPuzzleStepToChannel(
+        channelCurrentPuzzleStep,
+        message,
+        channel
+      );
+    } else {
+      return await message.channel.send("Incorrect Move");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-export async function assignPuzzleStepToChannel(
+async function maybeAssignNextPuzzleStepToChannel(
+  channelCurrentPuzzleStep: PuzzleStepRecord,
+  message: Discord.Message,
+  channel: ChannelRecord
+) {
+  const channelCurrentPuzzle = channelCurrentPuzzleStep.puzzle;
+  const nextComputerPlayedPuzzleStep = await findPuzzleStep(
+    channelCurrentPuzzle,
+    channelCurrentPuzzleStep.step + 1
+  );
+
+  if (nextComputerPlayedPuzzleStep.correct_next_move === "win") {
+    console.log("Next step is Win, resetting channel puzzle");
+    // Puzzle is over, set channel puzzle to null so they can get a new one
+    await assignPuzzleStepToChannel(channel._id, null);
+    return await sendPuzzleCompleteMesssage(message);
+  } else {
+    // Get and assing the next puzzle step the channel can solve
+    const nextChannelPuzzleStep = await findPuzzleStep(
+      channelCurrentPuzzle,
+      channelCurrentPuzzleStep.step + 2
+    );
+    await assignPuzzleStepToChannel(channel._id, nextChannelPuzzleStep._id);
+    return await sendBoardGifToChannel(
+      message.channel,
+      channelCurrentPuzzle,
+      channelCurrentPuzzleStep.step + 2
+    );
+  }
+}
+
+async function assignPuzzleStepToChannel(
   channel: number,
-  puzzleStep: number
+  puzzleStep: number | null
 ) {
   return await setChannelCurrentPuzzleStep(channel, puzzleStep);
 }
 
-// Will find a puzzle id that the channel hasn't already solved
-export function findNewPuzzleIdForChannel(): number {
-  return 90002;
+// Returns a random puzzle
+function findNewPuzzleIdForChannel(): number {
+  return 4190;
+  return Math.floor(Math.random() * Math.floor(120000));
 }
 
 export async function ingestPuzzle(puzzleId: number) {
@@ -166,7 +220,19 @@ function extractCorrectMoves(correctMoves: any): string[] {
       currentMove = currentMove[k];
     });
   }
-  correctMoveList.push("win");
+
+  console.log(
+    `Number of moves for puzzle is even: ${correctMoveList.length % 2 == 0}`
+  );
+
+  // If theres an even amount of correct moves ensure the last one is
+  // set to 'win' as some older lichess puzzles have a different format
+  if (correctMoveList.length % 2 == 0) {
+    correctMoveList[correctMoveList.length - 1] = "win";
+  } else {
+    correctMoveList.push("win");
+  }
+
   return correctMoveList;
 }
 

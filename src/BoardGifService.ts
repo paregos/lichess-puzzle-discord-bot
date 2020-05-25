@@ -59,7 +59,7 @@ export async function sendBoardGifToChannel(
 ) {
   const puzzlePath = getPuzzlePath(puzzle, step);
   return await channel.send(
-    `Lichess puzzle: ${puzzle}, step: ${step} www.lichess.com/training/${puzzle}`,
+    `Lichess puzzle: ${puzzle}, step: ${step} https://www.lichess.org/training/${puzzle}`,
     {
       files: [puzzlePath],
     }
