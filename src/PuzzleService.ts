@@ -132,7 +132,6 @@ async function assignPuzzleStepToChannel(
 
 // Returns a random puzzle
 function findNewPuzzleIdForChannel(): number {
-  return 4190;
   return Math.floor(Math.random() * Math.floor(120000));
 }
 
@@ -162,7 +161,7 @@ export async function ingestPuzzle(puzzleId: number) {
       var lichessPuzzleJson = JSON.parse(rawData).data;
 
       var correctAnswerArray = extractCorrectMoves(
-        lichessPuzzleJson.puzzle.lines
+        lichessPuzzleJson.puzzle.branch
       );
 
       var initialStateFen = lichessPuzzleJson.game.treeParts.fen;
@@ -207,18 +206,16 @@ export async function ingestPuzzle(puzzleId: number) {
     .catch((err) => console.log(err));
 }
 
-// Transforms a JSON blob of correct moves e.g  { "g2a8": { "d7d8": { "a8d8": "win" } } }
-// Into an array of strings with "win" always being the last element in the array
-function extractCorrectMoves(correctMoves: any): string[] {
+// Transforms a JSON blob of correct branches into an array of strings with
+// "win" always being the last element in the array
+function extractCorrectMoves(moveBranches: any): string[] {
   let correctMoveList: string[] = [];
 
-  let currentMove = correctMoves;
+  let currentBranch = moveBranches;
 
-  while (currentMove != "win") {
-    Object.keys(currentMove).forEach((k) => {
-      correctMoveList.push(k);
-      currentMove = currentMove[k];
-    });
+  while (currentBranch != null) {
+    correctMoveList.push(currentBranch.uci);
+    currentBranch = currentBranch.children[0];
   }
 
   console.log(
@@ -232,6 +229,8 @@ function extractCorrectMoves(correctMoves: any): string[] {
   } else {
     correctMoveList.push("win");
   }
+
+  console.log("Correct move list is ", correctMoveList);
 
   return correctMoveList;
 }

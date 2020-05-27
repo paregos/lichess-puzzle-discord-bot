@@ -1,0 +1,154 @@
+{
+  "data": {
+    "game": {
+      "id": "0aekujsr",
+      "perf": { "icon": ")", "name": "Blitz" },
+      "rated": true,
+      "players": [
+        { "userId": "tixopoy", "name": "TIXOPOY (1391)", "color": "white" },
+        { "userId": "davudao", "name": "davudao (1338)", "color": "black" }
+      ],
+      "treeParts": {
+        "ply": 12,
+        "fen": "r2qkb1r/ppp1p1pp/2npb3/3n2B1/3P4/5N2/PPP2PPP/RN1QKB1R w KQkq - 2 7",
+        "id": "PF",
+        "uci": "f6d5",
+        "san": "Nd5"
+      },
+      "clock": "5+1"
+    },
+    "puzzle": {
+      "id": 4190,
+      "rating": 1611,
+      "attempts": 3056,
+      "fen": "r2qkb1r/ppp1p1pp/2npbn2/6B1/3P4/5N2/PPP2PPP/RN1QKB1R b KQkq - 1 6",
+      "color": "white",
+      "initialPly": 12,
+      "gameId": "0aekujsr",
+      "lines": {
+        "c2c4": {
+          "d5b6": {
+            "d4d5": {
+              "d8d7": {
+                "f1e2": {
+                  "h7h6": {
+                    "g5e3": { "e6f7": { "d5c6": { "d7c6": "win" } } },
+                    "g5c1": "retry"
+                  }
+                },
+                "d5c6": { "b7c6": "win" },
+                "g5e3": { "e6g4": { "d5c6": { "d7c6": "win" } } },
+                "b1c3": { "e6g4": { "d5c6": { "d7c6": "win" } } },
+                "b2b3": "retry",
+                "d5e6": "retry",
+                "b1a3": "retry"
+              }
+            }
+          }
+        }
+      },
+      "vote": 36,
+      "branch": {
+        "ply": 13,
+        "fen": "r2qkb1r/ppp1p1pp/2npb3/3n2B1/2PP4/5N2/PP3PPP/RN1QKB1R b KQkq - 0 7",
+        "id": "-=",
+        "uci": "c2c4",
+        "san": "c4",
+        "children": [
+          {
+            "ply": 14,
+            "fen": "r2qkb1r/ppp1p1pp/1nnpb3/6B1/2PP4/5N2/PP3PPP/RN1QKB1R w KQkq - 1 8",
+            "id": "FL",
+            "uci": "d5b6",
+            "san": "Nb6",
+            "children": [
+              {
+                "ply": 15,
+                "fen": "r2qkb1r/ppp1p1pp/1nnpb3/3P2B1/2P5/5N2/PP3PPP/RN1QKB1R b KQkq - 0 8",
+                "id": "\u003eF",
+                "uci": "d4d5",
+                "san": "d5",
+                "children": [
+                  {
+                    "ply": 16,
+                    "fen": "r3kb1r/pppqp1pp/1nnpb3/3P2B1/2P5/5N2/PP3PPP/RN1QKB1R w KQkq - 1 9",
+                    "id": "^V",
+                    "uci": "d8d7",
+                    "san": "Qd7",
+                    "children": [
+                      {
+                        "ply": 17,
+                        "fen": "r3kb1r/pppqp1pp/1nPpb3/6B1/2P5/5N2/PP3PPP/RN1QKB1R b KQkq - 0 9",
+                        "id": "FM",
+                        "uci": "d5c6",
+                        "san": "dxc6",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "enabled": true
+    },
+    "mode": "play"
+  },
+  "pref": {
+    "blindfold": 0,
+    "coords": 1,
+    "rookCastle": 1,
+    "animation": { "duration": 250.0 },
+    "destination": true,
+    "resizeHandle": 1,
+    "moveEvent": 2,
+    "highlight": true,
+    "is3d": false
+  },
+  "i18n": {
+    "yourPuzzleRatingX": "Your puzzle rating: %s",
+    "goodMove": "Good move",
+    "butYouCanDoBetter": "But you can do better.",
+    "bestMove": "Best move!",
+    "keepGoing": "Keep going\u2026",
+    "puzzleFailed": "Puzzle failed",
+    "butYouCanKeepTrying": "But you can keep trying.",
+    "yourTurn": "Your turn",
+    "findTheBestMoveForBlack": "Find the best move for black.",
+    "findTheBestMoveForWhite": "Find the best move for white.",
+    "viewTheSolution": "View the solution",
+    "success": "Success",
+    "fromGameLink": "From game %s",
+    "boardEditor": "Board editor",
+    "continueFromHere": "Continue from here",
+    "playWithTheMachine": "Play with the computer",
+    "playWithAFriend": "Play with a friend",
+    "wasThisPuzzleAnyGood": "Was this puzzle any good?",
+    "pleaseVotePuzzle": "Help lichess improve by voting, using the up or down arrow:",
+    "thankYou": "Thank you!",
+    "puzzleId": "Puzzle %s",
+    "ratingX": "Rating: %s",
+    "playedXTimes:one": "Played %s time",
+    "playedXTimes": "Played %s times",
+    "continueTraining": "Continue training",
+    "retryThisPuzzle": "Retry this puzzle",
+    "toTrackYourProgress": "To track your progress:",
+    "signUp": "Register",
+    "thisPuzzleIsCorrect": "This puzzle is correct and interesting",
+    "thisPuzzleIsWrong": "This puzzle is wrong or boring",
+    "analysis": "Analysis board",
+    "rated": "Rated",
+    "casual": "Casual",
+    "depthX": "Depth %s",
+    "usingServerAnalysis": "Using server analysis",
+    "loadingEngine": "Loading engine ...",
+    "cloudAnalysis": "Cloud analysis",
+    "goDeeper": "Go deeper",
+    "showThreat": "Show threat",
+    "gameOver": "Game Over",
+    "inLocalBrowser": "in local browser",
+    "toggleLocalEvaluation": "Toggle local evaluation"
+  }
+}
