@@ -37,7 +37,7 @@ export function setupDbSchema(db: sqlite3.Database) {
   );
 
   db.run(
-    `CREATE TABLE IF NOT EXISTS " +
+    `CREATE TABLE IF NOT EXISTS
       puzzle_step (
       _id INTEGER PRIMARY KEY AUTOINCREMENT,
       puzzle INTEGER,

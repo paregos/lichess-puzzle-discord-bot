@@ -4,7 +4,7 @@
   "description": "A discord bot for lichess",
   "main": "Server.js",
   "scripts": {
-    "start": "ts-node src/server.ts"
+    "start": "ts-node src/Server.ts"
   },
   "repository": {
     "type": "git",

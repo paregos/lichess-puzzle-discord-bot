@@ -17,7 +17,7 @@ export async function maybeGenerateGif({
   fen,
   lastMove,
 }: BoardGifStructure) {
-  const baseUrl = `http://localhost:${lilaPort}`;
+  const baseUrl = `http://lila_gif:${lilaPort}`;
   const queryString = `/image.gif?fen=${fen}&lastMove=${lastMove}`;
   const url = baseUrl + queryString;
 

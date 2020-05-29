@@ -1,6 +1,7 @@
 node_modules/
 sqlite.db
 dist/
+.env
 
 # exclude all gifs
 /src/board_gifs/*
