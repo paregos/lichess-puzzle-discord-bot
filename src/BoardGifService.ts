@@ -3,6 +3,8 @@ import * as fs from "fs";
 import * as Discord from "discord.js";
 
 const lilaPort = process.env.LILA_PORT || "6175"; // 6175 default lila-gif port
+const lilaHost = process.env.LILA_HOST || "lilagif"; // 6175 default lila-gif port
+
 
 type BoardGifStructure = {
   puzzle: number;
@@ -17,7 +19,7 @@ export async function maybeGenerateGif({
   fen,
   lastMove,
 }: BoardGifStructure) {
-  const baseUrl = `http://lila_gif:${lilaPort}`;
+  const baseUrl = `http://${lilaHost}:${lilaPort}`;
   const queryString = `/image.gif?fen=${fen}&lastMove=${lastMove}`;
   const url = baseUrl + queryString;
 
