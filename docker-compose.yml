@@ -1,14 +1,13 @@
 version: "3.8"
 
 services:
+  lichessbot:
+    image: lichess-bot
+    env_file: .env
 
-    lichessbot:
-        image: lichess-bot
-        env_file: .env
-        
-    lilagif:
-        image: benmitchell58/lila-gif:latest
-        ports:
-            - 6175:6175
-        expose: 
-            - "6175"
+  lilagif:
+    image: benmitchell58/lila-gif:latest
+    ports:
+      - 6175:6175
+    expose:
+      - "6175"

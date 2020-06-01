@@ -75,6 +75,8 @@ async function replyToMoveMessage(message: Discord.Message) {
     console.log(`Valid move ${parseMove(message)}`);
     return await maybeSolvePuzzleStep(message, move);
   } catch (error) {
+    //TODO dont allow people to !move when there is no current puzzle for channel
+    console.log(error);
     message.channel.send(`Invalid move format, please refer to !help`);
   }
 }

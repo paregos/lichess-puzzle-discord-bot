@@ -4,12 +4,15 @@
 
 - This is a discord bot that aims to post chess puzzles from lichess in an interactive manner.
 
-## Requirements
+- Show example image
 
-- An instance of lila-gif running locally https://github.com/niklasf/lila-gif (default port 6175)
-- A valid discord bot token set as DISCORD_LICHESS_TOKEN in your environment variables
+## Tech stack & improvements
 
-## How to run
+- The application is currently written in typescript with a sqlite3 database, any improvements are welcome, just make a PR. If you encounter any issues also feel free to make a issue here on github.
 
-- `npm install`
-- `nodemon`
+## How to Run
+
+- TODO
+
+- DOCKER
+- WITHOUT DOCKER
