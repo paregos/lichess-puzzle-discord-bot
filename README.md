@@ -14,5 +14,8 @@
 
 - TODO
 
-- DOCKER
+- DOCKER `docker-compose up --build`
+- Need to run `docker build -t lichess-bot .` when changing any of the discord bot locally
+
+
 - WITHOUT DOCKER

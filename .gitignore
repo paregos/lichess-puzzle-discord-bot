@@ -8,3 +8,7 @@ dist/
 
 # but keep the parent folder
 !/src/board_gifs/.gitkeep 
+
+# keep sqlite3 db folder
+/src/db/sqlite3/*
+!/src/db/sqlite3/.gitkeep

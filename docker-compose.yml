@@ -4,6 +4,9 @@ services:
   lichessbot:
     image: lichess-bot
     env_file: .env
+    volumes:
+      - ./src/db/sqlite3:/usr/src/app/src/db/sqlite3
+      - ./src/board_gifs:/usr/src/app/src/board_gifs
 
   lilagif:
     image: benmitchell58/lila-gif:latest

@@ -4,7 +4,7 @@ sqlite3.verbose();
 
 import { setupDbSchema } from "./init_db";
 
-const db = new sqlite3.Database("./sqlite.db", (err) => {
+const db = new sqlite3.Database("./src/db/sqlite3/sqlite.db", (err) => {
   if (err) {
     console.log(err.message);
   } else {
