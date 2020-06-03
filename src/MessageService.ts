@@ -34,7 +34,6 @@ export async function maybeRespondToMessage(
 async function replyToHelpMessage(message: Discord.Message) {
   const messageEmbed = new Discord.MessageEmbed()
     .setTitle("Bot Commands")
-    .setThumbnail("https://i.imgur.com/wSTFkRM.png")
     .addFields(
       {
         name: "!help | help",
@@ -50,8 +49,7 @@ async function replyToHelpMessage(message: Discord.Message) {
         value:
           "Submits a move against the current puzzle step of the channel. Moves are in the format of a4e5 etc",
       }
-    )
-    .setFooter("Some footer text here", "https://i.imgur.com/wSTFkRM.png");
+    );
   return await message.channel.send(messageEmbed);
 }
 
