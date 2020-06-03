@@ -1,4 +1,4 @@
-FROM node:13.14-alpine3.10 as compiler
+FROM node:13.14-buster as compiler
 
 # Create app directory
 WORKDIR /usr/src/app
