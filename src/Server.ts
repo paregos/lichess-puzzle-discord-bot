@@ -12,7 +12,11 @@ client.on("ready", () => {
 });
 
 client.on("message", async (message) => {
-  await maybeRespondToMessage(client, message);
+  try {
+    await maybeRespondToMessage(client, message);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 client.login(token);

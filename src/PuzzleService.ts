@@ -73,12 +73,12 @@ export async function maybeSolvePuzzleStep(
   move: string
 ) {
   const channel = await getChannel(message.channel.id.toString());
-  if(channel == null){
-    return await message.channel.send("No puzzle found, use !puzzle to get a puzzle");
-  }
   const channelCurrentPuzzleStep = await findPuzzleStepById(
     channel.current_puzzle_step
   );
+  if(channelCurrentPuzzleStep == null){
+    return await message.channel.send("No puzzle found, use !puzzle to get a puzzle");
+  }
   try {
     if (channelCurrentPuzzleStep.correct_next_move === move) {
       await message.channel.send("Correct Move");
