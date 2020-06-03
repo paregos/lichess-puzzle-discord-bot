@@ -54,7 +54,6 @@ async function replyToHelpMessage(message: Discord.Message) {
 }
 
 async function replyToPuzzleMessage(message: Discord.Message) {
-  console.log("yo");
   await maybeCreateNewPuzzleForChannel(message);
   const currentPuzzleStep = await getChannelCurrentPuzzleStep(message);
 
