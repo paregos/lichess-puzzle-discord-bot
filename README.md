@@ -12,6 +12,12 @@
 
 - The application is currently written in typescript with a sqlite3 database and is currently running in docker containers on a raspberry pi 3, any improvements are welcome, just make a PR. If you encounter any issues also feel free to make a issue here on github.
 
+## Technical details
+
+- !puzzle grabs a random lichess puzzle between ids 1-120000
+- Each running instance of this bot (currently just my own) will at most make one request per puzzle to the lichess servers in an attempt to not be annoying and spammy, if you delete the sqlite3 db you'll need to make additional requests for puzzles you've already served before.
+- More to come...
+
 ## How to Run
 
 #### Docker
