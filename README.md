@@ -6,9 +6,7 @@
 
 - This bot is currently hosted on my raspberry pi and you can add it to your discord server [here](https://discord.com/api/oauth2/authorize?client_id=711480594629918772&permissions=522240&scope=bot)
 
-![Lichess-Discord-Bot sending a puzzle to a discord channel](https://github.com/paregos/lichess-puzzle-discord-bot/img/lichess_1.JPG "Lichess-Discord-Bot sending a puzzle to a discord channel")
-
-![Lichess-Discord-Bot responding to a move](https://github.com/paregos/lichess-puzzle-discord-bot/img/lichess_2.JPG "Lichess-Discord-Bot responding to a move")
+![Lichess-Discord-Bot sending a puzzle to a discord channel](https://github.com/paregos/lichess-puzzle-discord-bot/raw/master/img/bot.png "Lichess-Discord-Bot sending a puzzle to a discord channel")
 
 ## Tech stack & improvements
 
