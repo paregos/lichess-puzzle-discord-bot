@@ -18,6 +18,11 @@
 - Each running instance of this bot (currently just my own) will at most make one request per puzzle to the lichess servers in an attempt to not be annoying and spammy, if you delete the sqlite3 db you'll need to make additional requests for puzzles you've already served before.
 - More to come...
 
+## Commands
+- !puzzle
+- !move a1a2
+- !help
+
 ## How to Run
 
 #### Docker
