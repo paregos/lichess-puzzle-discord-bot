@@ -19,9 +19,9 @@
 - More to come...
 
 ## Commands
-- !puzzle
-- !move a1a2
-- !help
+- `!puzzle`
+- `!move a1a2`
+- `!help`
 
 ## How to Run
 
